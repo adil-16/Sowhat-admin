@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   LineChart,
   Line,
@@ -11,22 +11,40 @@ import {
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FiCalendar } from "react-icons/fi";
+import api from "../../utils/ApiService";
 
-const UserSignupChart = ({ totalSignups = 1000 }) => {
-  const [startDate, setStartDate] = useState(new Date("2023-02-02"));
-  const [endDate, setEndDate] = useState(new Date("2024-02-10"));
+const UserSignupChart = ({ totalSignups = 0 }) => {
+  const today = new Date();
+  const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+
+  const [startDate, setStartDate] = useState(firstDayOfMonth);
+  const [endDate, setEndDate] = useState(today);
+
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [chartData, setChartData] = useState([]);
 
-  const chartData = [
-    { time: "9 AM", basic: 20, enhanced: 30 },
-    { time: "10 AM", basic: 35, enhanced: 45 },
-    { time: "10:30 AM", basic: 35, enhanced: 50 },
-    { time: "11 AM", basic: 25, enhanced: 40 },
-    { time: "11:30 AM", basic: 25, enhanced: 38 },
-    { time: "12 PM", basic: 40, enhanced: 55 },
-    { time: "12:30 PM", basic: 40, enhanced: 57 },
-    { time: "1 PM", basic: 30, enhanced: 48 },
-  ];
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.get(
+          `/admin-dashboard/userSignups?fromdate=${startDate.toISOString().split("T")[0]}&toDate=${endDate.toISOString().split("T")[0]}`
+        );
+        if (response.data.success) {
+          const data = response.data.userSignups.basicSignups.map((basic, index) => ({
+            time: `${basic.time}:00`,
+            basic: basic.count,
+            enhanced: response.data.userSignups.enhancedSignups[index].count,
+          }));
+          setChartData(data);
+        }
+      } catch (error) {
+        console.error("Error fetching user signups:", error);
+      }
+    };
+
+    fetchData();
+  }, [startDate, endDate]);
 
   const formatDate = (date) => {
     return new Intl.DateTimeFormat("en-US", {

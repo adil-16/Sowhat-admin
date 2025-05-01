@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useState } from "react";
 
 const FilterDropdown = ({ onChange }) => {
@@ -20,11 +19,10 @@ const FilterDropdown = ({ onChange }) => {
         onChange={handleChange}
         className="border rounded p-2 text-sm"
       >
-        <option value="Region">Region</option>
-        <option value="Gender">Gender</option>
-        <option value="Role">Role</option>
-        <option value="Subscription Type">Subscription Type</option>
+        <option value="region">Region</option>
+        <option value="role">Role</option>
       </select>
+
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 
 const PieCharts = ({ data }) => {
-  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+  const COLORS = ["#8B0000", "#800080", "#ADD8E6", "#FFA07A"];
 
   return (
     <div className="flex flex-col md:flex-row items-start w-full">

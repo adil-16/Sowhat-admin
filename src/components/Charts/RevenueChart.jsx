@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -8,38 +8,44 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import api from "../../utils/ApiService"
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const RevenueChart = () => {
-  const [view, setView] = useState("monthly");
+  const [view, setView] = useState("Monthly");
+  const [chartData, setChartData] = useState(null);
 
-  const revenueData = {
-    weekly: {
-      labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
-      data: [200, 300, 400, 500, 600],
-    },
-    monthly: {
-      labels: ["December", "January", "February", "March", "April"],
-      data: [3000, 4200, 3900, 4500, 4890],
-    },
-    yearly: {
-      labels: ["2020", "2021", "2022", "2023", "2024"],
-      data: [18000, 22000, 25000, 30000, 45890],
-    },
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.get(
+          `/admin-dashboard/revenueChart?filter=${view}`
+        );
+        if (response.data.success) {
+          const labels = response.data.userBreakdown.map(
+            (entry) => entry.startDate
+          );
+          const data = response.data.userBreakdown.map((entry) => entry.count);
+          setChartData({
+            labels,
+            datasets: [
+              {
+                label: "Revenue (£)",
+                data,
+                backgroundColor: "#01D3F9",
+                borderRadius: 6,
+              },
+            ],
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching revenue data:", error);
+      }
+    };
 
-  const chartData = {
-    labels: revenueData[view].labels,
-    datasets: [
-      {
-        label: "Revenue (£)",
-        data: revenueData[view].data,
-        backgroundColor: "#01D3F9",
-        borderRadius: 6,
-      },
-    ],
-  };
+    fetchData();
+  }, [view]);
 
   const options = {
     responsive: true,
@@ -63,28 +69,34 @@ const RevenueChart = () => {
         <h2 className="text-lg font-semibold">Revenue Chart</h2>
         <div className="flex gap-4 text-sm font-medium">
           <span
-            className={getTextClasses("weekly")}
-            onClick={() => setView("weekly")}
+            className={getTextClasses("Weekly")}
+            onClick={() => setView("Weekly")}
           >
             Weekly
           </span>
           <span
-            className={getTextClasses("monthly")}
-            onClick={() => setView("monthly")}
+            className={getTextClasses("Monthly")}
+            onClick={() => setView("Monthly")}
           >
             Monthly
           </span>
           <span
-            className={getTextClasses("yearly")}
-            onClick={() => setView("yearly")}
+            className={getTextClasses("Yearly")}
+            onClick={() => setView("Yearly")}
           >
             Yearly
           </span>
         </div>
       </div>
-      <Bar data={chartData} options={options} />
+
+      {chartData ? (
+        <Bar data={chartData} options={options} />
+      ) : (
+        <div className="text-center text-gray-500 py-8">Loading chart...</div>
+      )}
     </div>
   );
+
 };
 
 export default RevenueChart;

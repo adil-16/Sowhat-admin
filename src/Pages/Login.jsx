@@ -1,20 +1,58 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import toast from "react-hot-toast";
+import Loader from "../components/Loader/Loader";
 
 const Login = () => {
   const navigate = useNavigate();
-
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (email && password) {
-      navigate("/");
-    } else {
-      alert("Please enter valid credentials.");
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!email || !password) {
+      toast.error("Please enter both email and password.");
+      return;
+    }
+    if (!emailRegex.test(email)) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
+
+    const loginData = {
+      email,
+      password,
+    };
+    setLoading(true);
+    try {
+      const response = await axios.put(
+        `${import.meta.env.VITE_API_URL}auth/admin-login`,
+        loginData
+      );
+
+      if (response.status === 200) {
+        console.log(response.data.result.token);
+        localStorage.setItem("token", response.data.result.token);
+        toast.success("Login successful!");
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      const message =
+        error.response?.data?.message || "Login failed. Please try again.";
+      toast.error(message);
+    }
+    finally {
+      setLoading(false);
     }
   };
+
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#E5FAFF] relative">
@@ -67,9 +105,10 @@ const Login = () => {
         </div>
         <button
           onClick={handleLogin}
-          className="bg-primary hover:bg-[#00aede] text-black font-semibold py-2 w-full rounded-md"
+          disabled={loading}
+          className="bg-primary hover:bg-[#00aede] text-black font-semibold py-2 w-full rounded-md flex items-center justify-center gap-2 disabled:opacity-60"
         >
-          Login
+          {loading ? <Loader /> : "Login"}
         </button>
       </div>
     </div>

@@ -4,6 +4,7 @@ import PublicRoutes from "./utils/Routes/PublicRoute";
 import Dashboard from "./Pages/Dashboard";
 import UsersBreakdown from "./Pages/UsersBreakdown";
 import Login from "./Pages/Login";
+import CustomToaster from "./utils/CustomToaster";
 
 const router = createBrowserRouter([
   {
@@ -26,7 +27,12 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <CustomToaster />
+      <RouterProvider router={router} />
+    </>
+  );
 };
 
 export default App;
