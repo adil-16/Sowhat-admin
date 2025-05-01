@@ -17,7 +17,7 @@ const RecentSignupTable = () => {
       : true;
     const matchesSearch = searchTerm
       ? user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.email.toLowerCase().includes(searchTerm.toLowerCase())
+      user.email.toLowerCase().includes(searchTerm.toLowerCase())
       : true;
     return matchesFilter && matchesSearch;
   });
@@ -92,7 +92,7 @@ const RecentSignupTable = () => {
                 <td className="px-4 py-2">{user.phone}</td>
                 <td className="px-4 py-2">
                   {user.plan.toLowerCase() === "enhanced" ? (
-                    <span className=" bg-cyan-400 px-2 py-1 rounded text-sm inline-flex items-center gap-1">
+                    <span className=" bg-primary px-2 py-1 rounded text-sm inline-flex items-center gap-1">
                       <GiSevenPointedStar />
                       <span>{user.plan}</span>
                     </span>

@@ -35,7 +35,7 @@ const RevenueChart = () => {
       {
         label: "Revenue (£)",
         data: revenueData[view].data,
-        backgroundColor: "#0f172a",
+        backgroundColor: "#01D3F9",
         borderRadius: 6,
       },
     ],

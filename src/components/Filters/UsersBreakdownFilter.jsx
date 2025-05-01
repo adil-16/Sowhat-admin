@@ -36,7 +36,6 @@ const UsersBreakdownFilter = ({ close, onApply }) => {
 
   return (
     <div className="absolute top-full right-0 z-10 bg-white w-[320px] max-h-[400px] overflow-y-auto p-4 shadow-lg rounded-lg">
-      {/* Close Icon */}
       <button
         onClick={close}
         className="absolute top-2 right-2 text-gray-500 hover:text-black"
@@ -45,8 +44,6 @@ const UsersBreakdownFilter = ({ close, onApply }) => {
       </button>
 
       <h3 className="text-lg font-semibold mb-5">Filter</h3>
-
-      {/* Gender Dropdown */}
       <label className="block text-sm mb-1">Gender</label>
       <select
         value={gender}
@@ -57,18 +54,15 @@ const UsersBreakdownFilter = ({ close, onApply }) => {
         <option value="Male">Male</option>
         <option value="Female">Female</option>
       </select>
-
-      {/* Region */}
       <h4 className="text-sm font-medium mb-1">Region</h4>
       <div className="flex flex-wrap gap-2 mb-4">
         {regions.map((region) => (
           <div
             key={region}
-            className={`flex items-center text-sm px-2 py-1 rounded-full border cursor-pointer ${
-              selectedRegions.includes(region)
-                ? "bg-green-200 border-green-500"
-                : "bg-gray-100"
-            }`}
+            className={`flex items-center text-sm px-2 py-1 rounded-full border cursor-pointer ${selectedRegions.includes(region)
+              ? "bg-green-200 border-green-500"
+              : "bg-gray-100"
+              }`}
             onClick={() =>
               toggleSelect(region, selectedRegions, setSelectedRegions)
             }
@@ -84,17 +78,15 @@ const UsersBreakdownFilter = ({ close, onApply }) => {
         ))}
       </div>
 
-      {/* Role */}
       <h4 className="text-sm font-medium mb-1">Role</h4>
       <div className="flex flex-wrap gap-2 mb-4">
         {roles.map((role) => (
           <div
             key={role}
-            className={`flex items-center text-sm px-2 py-1 rounded-full border cursor-pointer ${
-              selectedRoles.includes(role)
-                ? "bg-green-200 border-green-500"
-                : "bg-gray-100"
-            }`}
+            className={`flex items-center text-sm px-2 py-1 rounded-full border cursor-pointer ${selectedRoles.includes(role)
+              ? "bg-green-200 border-green-500"
+              : "bg-gray-100"
+              }`}
             onClick={() => toggleSelect(role, selectedRoles, setSelectedRoles)}
           >
             {role}
@@ -107,8 +99,6 @@ const UsersBreakdownFilter = ({ close, onApply }) => {
           </div>
         ))}
       </div>
-
-      {/* Buttons */}
       <div className="flex justify-between items-center">
         <button
           className="text-gray-600 text-sm border border-gray-300 rounded px-4 py-1 hover:bg-gray-100"
@@ -117,7 +107,7 @@ const UsersBreakdownFilter = ({ close, onApply }) => {
           Reset
         </button>
         <button
-          className="bg-cyan-400 text-white text-sm px-4 py-1 rounded hover:bg-cyan-500"
+          className="bg-primary text-white text-sm px-4 py-1 rounded hover:bg-cyan-500"
           onClick={handleApply}
         >
           Apply

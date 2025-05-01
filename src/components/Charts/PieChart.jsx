@@ -5,10 +5,7 @@ const PieCharts = ({ data }) => {
 
   return (
     <div className="flex flex-col md:flex-row items-start w-full">
-      <div
-        className="w-full md:w-1/2 h-[300px] md:h-[350px] lg:h-[350px]"
-        style={{ height: "100%" }}
-      >
+      <div className="w-full md:w-1/2 h-[300px] md:h-[350px] lg:h-[350px]">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie

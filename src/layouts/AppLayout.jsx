@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { Outlet, useNavigation } from "react-router-dom";
 import Sidebar from "../components/Sidebar/Sidebar";
 import { FaSignOutAlt } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const AppLayout = () => {
   const [loading, isLoading] = useState(false);
   const navigation = useNavigation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (navigation.state === "loading") {
@@ -36,7 +38,7 @@ const AppLayout = () => {
               <span className="font-medium text-gray-800">Adil Masood</span>
               <p className="text-xs text-gray-500">Admin</p>
             </div>
-            <button className="ml-2 text-gray-500 hover:text-red-600">
+            <button onClick={() => navigate("/login")} className="ml-2 text-gray-500 hover:text-red-600">
               <FaSignOutAlt size={18} />
             </button>
           </div>
