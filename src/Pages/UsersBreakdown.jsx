@@ -3,7 +3,7 @@ import UserBreakdownTable from "../components/Tables/UsersBreakdownTable";
 
 const UsersBreakdown = () => {
   return (
-    <div className="bg-white rounded-lg p-4 shadow-md overflow-x-auto">
+    <div className="bg-white rounded-lg p-4 overflow-x-auto">
       <UserBreakdownTable />
     </div>
   );

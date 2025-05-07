@@ -44,15 +44,12 @@ const Login = () => {
     } catch (error) {
       console.error("Login error:", error);
       const message =
-        error.response?.data?.message || "Login failed. Please try again.";
+        error.response?.data?.error || "Login failed. Please try again.";
       toast.error(message);
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
   };
-
-
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#E5FAFF] relative">

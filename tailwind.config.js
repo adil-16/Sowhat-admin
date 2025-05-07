@@ -5,6 +5,7 @@ export default {
     extend: {
       colors: {
         primary: "#01D3F9",
+        secondary: "#F1F1F2",
       },
       fontFamily: {
         inter: ["Inter", "sans-serif"],

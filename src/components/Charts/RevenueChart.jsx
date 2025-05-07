@@ -8,7 +8,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import api from "../../utils/ApiService"
+import api from "../../utils/ApiService";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
@@ -64,7 +64,7 @@ const RevenueChart = () => {
       : "text-gray-500 hover:text-black cursor-pointer";
 
   return (
-    <div className="bg-white rounded-lg p-6 w-full md:w-full shadow-md h-full">
+    <div className="bg-white rounded-lg p-6 w-full md:w-full shadow-md h-full border">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold">Revenue Chart</h2>
         <div className="flex gap-4 text-sm font-medium">
@@ -96,7 +96,6 @@ const RevenueChart = () => {
       )}
     </div>
   );
-
 };
 
 export default RevenueChart;

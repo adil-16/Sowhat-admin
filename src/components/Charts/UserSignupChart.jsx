@@ -13,30 +13,34 @@ import "react-datepicker/dist/react-datepicker.css";
 import { FiCalendar } from "react-icons/fi";
 import api from "../../utils/ApiService";
 
-const UserSignupChart = ({ totalSignups = 0 }) => {
+const UserSignupChart = () => {
   const today = new Date();
   const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
 
   const [startDate, setStartDate] = useState(firstDayOfMonth);
   const [endDate, setEndDate] = useState(today);
-
+  const [totalSignups, setTotalSignups] = useState(0);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [chartData, setChartData] = useState([]);
-
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await api.get(
-          `/admin-dashboard/userSignups?fromdate=${startDate.toISOString().split("T")[0]}&toDate=${endDate.toISOString().split("T")[0]}`
+          `/admin-dashboard/userSignups?fromdate=${
+            startDate.toISOString().split("T")[0]
+          }&toDate=${endDate.toISOString().split("T")[0]}`
         );
         if (response.data.success) {
-          const data = response.data.userSignups.basicSignups.map((basic, index) => ({
-            time: `${basic.time}:00`,
-            basic: basic.count,
-            enhanced: response.data.userSignups.enhancedSignups[index].count,
-          }));
+          const data = response.data.userSignups.basicSignups.map(
+            (basic, index) => ({
+              time: `${basic.time}:00`,
+              basic: basic.count,
+              enhanced: response.data.userSignups.enhancedSignups[index].count,
+            })
+          );
           setChartData(data);
+          setTotalSignups(response.data.userSignups.totalSignups);
         }
       } catch (error) {
         console.error("Error fetching user signups:", error);
@@ -59,9 +63,7 @@ const UserSignupChart = ({ totalSignups = 0 }) => {
       <div className="flex justify-between items-center mb-4">
         <div>
           <h2 className="text-xl font-semibold">User Signups</h2>
-          <p className="text-gray-500 text-sm">
-            {totalSignups.toLocaleString()} total signups
-          </p>
+          <p className="text-gray-500 text-sm">{totalSignups} total signups</p>
         </div>
 
         <div className="flex items-center gap-2">
