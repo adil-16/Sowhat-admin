@@ -5,6 +5,7 @@ import Dashboard from "./Pages/Dashboard";
 import UsersBreakdown from "./Pages/UsersBreakdown";
 import Login from "./Pages/Login";
 import CustomToaster from "./utils/CustomToaster";
+import ProtectedRoute from "./utils/Routes/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -12,11 +13,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <PublicRoutes Component={Dashboard} />,
+        element: <ProtectedRoute Component={Dashboard} />,
       },
       {
         path: "/users",
-        element: <PublicRoutes Component={UsersBreakdown} />,
+        element: <ProtectedRoute Component={UsersBreakdown} />,
       },
     ],
   },
