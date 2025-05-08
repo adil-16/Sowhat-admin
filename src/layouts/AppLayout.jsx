@@ -89,12 +89,12 @@ const AppLayout = () => {
           </div>
           <div className="hidden md:flex bg-white px-4 py-2 rounded-lg items-center gap-3 border border-dashed border-gray-300 shadow-md">
             <img
-              src="/me.jpg"
+              src="/logo.svg"
               alt="User"
-              className="w-10 h-10 rounded-full object-cover"
+              className="w-12 h-12 rounded-full object-contain"
             />
             <div className="leading-4">
-              <span className="font-medium text-gray-800">Adil Masood</span>
+              <span className="font-medium text-gray-800">SoWhat</span>
               <p className="text-xs text-gray-500">Admin</p>
             </div>
             <button
